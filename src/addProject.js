@@ -1,8 +1,9 @@
 import './style.css';
+import { handleToDoDisplay } from './index.js';
+
+
 
 //This module adds and updates the DOM with project titles in the side bar. 
-
-
 export default function addProjectToDom(projectLibrary) {
     const projectList = document.createElement('div');
     projectList.setAttribute('id', 'projectList');
@@ -19,17 +20,64 @@ export default function addProjectToDom(projectLibrary) {
     projectTitle.innerHTML = projectLibrary[i].title;
     
     projectList.appendChild(projectTitle);
-    console.log(projectLibrary[i].title)
+    
 }
 }
 
 function addClick(element) {
-    return element.addEventListener('click', displayProject);
+    
+element.addEventListener('click', () => {
+    let dataNum = element.dataset.num;
+    let header = element.innerHTML;
+    clearHeader();
+    createHeader(header, dataNum);
+    handleToDoDisplay(dataNum);
+})
 }
 
- export function displayProject (project) {
-    const list = document.getElementById('list');
+function clearHeader() {
+    const headerContainer = document.getElementById('headerContainer');
+    headerContainer.remove();
+}
 
+//this function
+ export function createHeader (title, datanum) {
+    const listTitle = document.getElementById('listTitle');
+    
+    const headerContainer = document.createElement('div');
+    headerContainer.setAttribute('id', 'headerContainer');
+
+    const listHeader = document.createElement('div');
+    listHeader.setAttribute('id', 'listHeader');
+    listHeader.innerHTML = title;
+
+    const addToDoButton = document.createElement('button');
+    addToDoButton.setAttribute('id', 'addToDoButton');
+    addToDoButton.setAttribute('data-num', datanum);
+    addToDoButton.innerHTML = 'Add a ToDo';
+    addToDoButton.type = 'button';
+    addToDoClick(addToDoButton);
+
+    document.getElementById('submitFormButton').setAttribute('data-num', datanum);
+
+
+    listTitle.appendChild(headerContainer);
+    headerContainer.appendChild(listHeader);
+    headerContainer.appendChild(addToDoButton);
+}
+
+function addToDoClick (element) {
+    element.addEventListener('click', () => {
+    document.getElementById('formPopUp').style.display = "block";
+
+    })
+}
+
+//This function displays all the ToDos for a project to the list ul element in the "main" div.
+ export function displayProject (project) {
+    
+    const list = document.getElementById('list');
+    list.innerHTML = '';
     for (let i = 0; i < project.length; i ++ ){
 
     const listRow = document.createElement('li');
@@ -55,11 +103,11 @@ toDoTitle.innerHTML = project[i].title + project[i].description;
 status.innerHTML = project[i].priority;
 toDoDate.innerHTML = project[i].dueDate;
 toDoMenu.innerHTML = 'options';
-
-}
-    
 }
 
+}
+
+//This function adds a class to an element. I really just did this for fun and practice but also i think it saves a bit of time.
  function addClass(element, classword) {
     return element.classList.add(classword);
 }
