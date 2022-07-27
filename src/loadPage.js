@@ -39,9 +39,12 @@ export default function loadPage() {
 
     const dateInput = document.createElement('input');
     dateInput.setAttribute('id', 'date');
+    dateInput.setAttribute('type', 'date');
     const dateLabel = document.createElement('label');
     dateLabel.setAttribute('for', 'date');
     dateLabel.innerHTML = 'Date:';
+
+    
 
     const closeFormButton = document.createElement('button');
     closeFormButton.setAttribute('id', 'closeFormButton');
@@ -97,6 +100,7 @@ export default function loadPage() {
     formInput.appendChild(descriptionInput);
     formInput.appendChild(dateLabel);
     formInput.appendChild(dateInput);
+    
     
     formInput.appendChild(submitFormButton);
     formInput.appendChild(closeFormButton);

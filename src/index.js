@@ -7,12 +7,12 @@ import { createHeader } from './addProject.js';
 
 document.body.appendChild(loadPage());
 
-const toDo = new ToDo('Shop', 'Groceries', 'Tomorrow', 'Urgent');
+const toDo = new ToDo('Shop', 'Groceries', 'Tomorrow');
 
 
-const toDo1 = new ToDo("Eat", 'some food', "today", "urgent");
+const toDo1 = new ToDo("Eat", 'some food', "today");
 
-const toDo3 = new ToDo("Read", "Books", "Now", "Not important");
+const toDo3 = new ToDo("Read", "Books", "Now");
 
 
 const projectLibrary = [];
@@ -48,20 +48,47 @@ export function handleAddButton () {
 export function handleAddTodo (dataNum) {
     let title = document.getElementById('titleInput');
     let newTitle = title.value;
+    if (newTitle === '') {
+        alert('Please enter a title!');
+        return;
+    }
 
     let description = document.getElementById('description');
     let newDescription = description.value;
 
     let date = document.getElementById('date');
     let newDate = date.value;
+    if (newDate === '') {
+        newDate = "No due date"; 
+    }
 
-    let newToDo = new ToDo(newTitle, newDescription, newDate, "Options");
+    
+
+    let newToDo = new ToDo(newTitle, newDescription, newDate, false);
     projectLibrary[dataNum].list.push(newToDo);
     displayProject(projectLibrary[dataNum].list);
+
+    title.value = '';
+    description.value = '';
+    date.value = '';
+    document.getElementById('formPopUp').style.display = "none";
 }
 
 export function handleToDoDisplay(dataNum) {
-    displayProject(projectLibrary[dataNum].list);
+    displayProject(projectLibrary[dataNum].list, dataNum);
+}
+
+export function handleCheckBox(element, p,d) {
+    const status = projectLibrary[p].list[d].status;
+    
+    if(element.checked) {
+        console.log("boom");
+    } else {
+        console.log('oops');
+    }
+    console.log(p + " " + d);
+    console.log(projectLibrary[p].list[d]);
+
 }
 
 
@@ -76,7 +103,7 @@ createHeader(projectLibrary[0].title, 0);
 
 
 
-displayProject(projectLibrary[0].list);
+displayProject(projectLibrary[0].list, 0);
 // console.log(projectLibrary);
 
 // console.log(projectLibrary[0].title);
