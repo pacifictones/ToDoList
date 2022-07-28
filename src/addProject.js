@@ -1,5 +1,5 @@
 import './style.css';
-import { handleToDoDisplay, handleCheckBox } from './index.js';
+import { handleToDoDisplay, handleCheckBox, setCheckBox } from './index.js';
 
 
 
@@ -14,22 +14,24 @@ export default function addProjectToDom(projectLibrary) {
     for (let i = 0; i < projectLibrary.length; i++) {
       
     const projectTitle = document.createElement('div');
-    addClick(projectTitle);
+    
     addClass(projectTitle, "projectTitle");
     projectTitle.setAttribute('data-num', i);
+    const dataNum = projectTitle.dataset.num;
+    addClick(projectTitle);
     projectTitle.innerHTML = projectLibrary[i].title;
     
-    projectList.appendChild(projectTitle);
+    projectList.appendChild(projectTitle, dataNum);
     
 }
 }
 
 
 
-function addClick(element) {
+function addClick(element, dataNum) {
     
 element.addEventListener('click', () => {
-    let dataNum = element.dataset.num;
+    // let dataNum = element.dataset.num;
     let header = element.innerHTML;
     clearHeader();
     createHeader(header, dataNum);
@@ -84,7 +86,8 @@ function addToDoClick (element) {
    
     const list = document.getElementById('list');
     list.innerHTML = '';
-
+    
+    
     for (let i = 0; i < project.length; i ++ ){
     const projectNumber = dataNum;
     console.log(projectNumber);    
@@ -98,12 +101,22 @@ function addToDoClick (element) {
     status.setAttribute('data-project', projectNumber);
     status.setAttribute('type', 'checkbox')
     addClickToCheckbox(status);
+    // setCheckBox(status, projectNumber, i);
+    
+
     const toDoTitle = document.createElement('div');
     addClass(toDoTitle, "toDoTitle");
     const toDoDate = document.createElement('div');
     addClass(toDoDate, "toDoDate");
-    const toDoMenu = document.createElement('div');
+
+    
+
+    const toDoMenu = document.createElement('button');
     addClass(toDoMenu, "toDoMenue");
+    toDoMenu.setAttribute('data-num', i);
+    toDoMenu.setAttribute('data-project', projectNumber);
+    toDoMenu.innerHTML = 'edit';
+    // addMenuClick(toDoMenu, projectNumber, i);
     
     list.appendChild(listRow);
     listRow.appendChild(status);
@@ -117,7 +130,12 @@ status.innerHTML = project[i].priority;
 toDoDate.innerHTML = project[i].dueDate;
 toDoMenu.innerHTML = 'options';
 }
+}
 
+function addMenuClick(element, p, d){
+    element.addEventListener('click', () => {
+
+    })
 }
 
 //This function adds a class to an element. I really just did this for fun and practice but also i think it saves a bit of time.

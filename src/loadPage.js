@@ -44,7 +44,7 @@ export default function loadPage() {
     dateLabel.setAttribute('for', 'date');
     dateLabel.innerHTML = 'Date:';
 
-    
+     
 
     const closeFormButton = document.createElement('button');
     closeFormButton.setAttribute('id', 'closeFormButton');

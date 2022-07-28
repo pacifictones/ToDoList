@@ -66,7 +66,7 @@ export function handleAddTodo (dataNum) {
 
     let newToDo = new ToDo(newTitle, newDescription, newDate, false);
     projectLibrary[dataNum].list.push(newToDo);
-    displayProject(projectLibrary[dataNum].list);
+    displayProject(projectLibrary[dataNum].list, dataNum);
 
     title.value = '';
     description.value = '';
@@ -90,13 +90,13 @@ export function handleCheckBox(element, p,d) {
 
 }
 
-export function setCheckBox(element, p, d) {
-    if(projectLibrary[p].list[d].status === true) {
-        element.checked = true;
-    } else {
-        element.checked = false;
-    }
-}
+// export function setCheckBox(element, p, d) {
+//     if(projectLibrary[p].list[d].status === true) {
+//         element.checked = true;
+//     } else {
+//         element.checked = false;
+//     }
+// }
 
  console.log(projectLibrary[0].list);
 
