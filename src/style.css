@@ -36,7 +36,8 @@ body {
 }
 
 .listRow {
-    display: flex;
+    display: grid;
+    grid-template-columns: .25fr 1fr 1fr 1fr;
 }
 
 .status, .toDoDate, .toDoMenu  {
@@ -79,3 +80,7 @@ body {
 input {
     width: 95%;
 }
+
+/* .status {
+    width: 30px;
+} */

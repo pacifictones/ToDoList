@@ -1,5 +1,5 @@
 import './style.css';
-import { handleToDoDisplay } from './index.js';
+import { handleToDoDisplay, handleCheckBox } from './index.js';
 
 
 
@@ -24,6 +24,8 @@ export default function addProjectToDom(projectLibrary) {
 }
 }
 
+
+
 function addClick(element) {
     
 element.addEventListener('click', () => {
@@ -35,12 +37,15 @@ element.addEventListener('click', () => {
 })
 }
 
+
+
 function clearHeader() {
     const headerContainer = document.getElementById('headerContainer');
     headerContainer.remove();
 }
 
-//this function
+
+
  export function createHeader (title, datanum) {
     const listTitle = document.getElementById('listTitle');
     
@@ -66,6 +71,7 @@ function clearHeader() {
     headerContainer.appendChild(addToDoButton);
 }
 
+
 function addToDoClick (element) {
     element.addEventListener('click', () => {
     document.getElementById('formPopUp').style.display = "block";
@@ -74,17 +80,24 @@ function addToDoClick (element) {
 }
 
 //This function displays all the ToDos for a project to the list ul element in the "main" div.
- export function displayProject (project) {
-    
+ export function displayProject (project, dataNum) {
+   
     const list = document.getElementById('list');
     list.innerHTML = '';
-    for (let i = 0; i < project.length; i ++ ){
 
+    for (let i = 0; i < project.length; i ++ ){
+    const projectNumber = dataNum;
+    console.log(projectNumber);    
     const listRow = document.createElement('li');
     addClass(listRow, "listRow");
+    listRow.setAttribute('data-num', i);
 
-    const status = document.createElement('div');
+    const status = document.createElement('input');
     addClass(status, "status");
+    status.setAttribute('data-num', i);
+    status.setAttribute('data-project', projectNumber);
+    status.setAttribute('type', 'checkbox')
+    addClickToCheckbox(status);
     const toDoTitle = document.createElement('div');
     addClass(toDoTitle, "toDoTitle");
     const toDoDate = document.createElement('div');
@@ -111,3 +124,13 @@ toDoMenu.innerHTML = 'options';
  function addClass(element, classword) {
     return element.classList.add(classword);
 }
+
+function addClickToCheckbox(element) {
+    element.addEventListener('change', () => {
+    let dataNum = element.dataset.num;
+    let project = element.dataset.project;
+    
+    handleCheckBox(element, project, dataNum);
+    })
+}
+
