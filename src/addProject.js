@@ -1,5 +1,9 @@
 import './style.css';
+<<<<<<< HEAD
 import { handleToDoDisplay, handleCheckBox, setCheckBox } from './index.js';
+=======
+import { handleToDoDisplay, handleCheckBox } from './index.js';
+>>>>>>> 9fd88ec054f08edc839d3a6e238c247d99a4297b
 
 
 
@@ -28,7 +32,11 @@ export default function addProjectToDom(projectLibrary) {
 
 
 
+<<<<<<< HEAD
 function addClick(element, dataNum) {
+=======
+function addClick(element) {
+>>>>>>> 9fd88ec054f08edc839d3a6e238c247d99a4297b
     
 element.addEventListener('click', () => {
     // let dataNum = element.dataset.num;
@@ -86,8 +94,12 @@ function addToDoClick (element) {
    
     const list = document.getElementById('list');
     list.innerHTML = '';
+<<<<<<< HEAD
     
     
+=======
+
+>>>>>>> 9fd88ec054f08edc839d3a6e238c247d99a4297b
     for (let i = 0; i < project.length; i ++ ){
     const projectNumber = dataNum;
     console.log(projectNumber);    
@@ -101,9 +113,12 @@ function addToDoClick (element) {
     status.setAttribute('data-project', projectNumber);
     status.setAttribute('type', 'checkbox')
     addClickToCheckbox(status);
+<<<<<<< HEAD
     // setCheckBox(status, projectNumber, i);
     
 
+=======
+>>>>>>> 9fd88ec054f08edc839d3a6e238c247d99a4297b
     const toDoTitle = document.createElement('div');
     addClass(toDoTitle, "toDoTitle");
     const toDoDate = document.createElement('div');
