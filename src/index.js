@@ -7,7 +7,7 @@ import { createHeader } from './addProject.js';
 
 document.body.appendChild(loadPage());
 
-const toDo = new ToDo('Shop', 'Groceries', 'Tomorrow');
+const toDo = new ToDo('Shop', 'Groceries', 'Today');
 
 
 const toDo1 = new ToDo("Eat", 'some food', "today");
@@ -17,19 +17,20 @@ const toDo3 = new ToDo("Read", "Books", "Now");
 
 const projectLibrary = [];
 
-const project1 = new Project("shopping");
+const project1 = new Project("Quick List");
 project1.list.push(toDo);
 project1.list.push(toDo1);
 projectLibrary.push(project1);
 console.log(projectLibrary);
 
-const project2 = new Project('eating');
-project2.list.push(toDo);
-projectLibrary.push(project2);
+// const project2 = new Project('eating');
+// project2.list.push(toDo);
+// project2.list.push(toDo);
+// projectLibrary.push(project2);
 
-const project3 = new Project('yoyoing');
-project3.list.push(toDo3);
-projectLibrary.push(project3);
+// const project3 = new Project('yoyoing');
+// project3.list.push(toDo3);
+// projectLibrary.push(project3);
 
 export function handleAddButton () {
     const projectList = document.getElementById('projectList');
@@ -66,11 +67,7 @@ export function handleAddTodo (dataNum) {
 
     let newToDo = new ToDo(newTitle, newDescription, newDate, false);
     projectLibrary[dataNum].list.push(newToDo);
-<<<<<<< HEAD
     displayProject(projectLibrary[dataNum].list, dataNum);
-=======
-    displayProject(projectLibrary[dataNum].list);
->>>>>>> 9fd88ec054f08edc839d3a6e238c247d99a4297b
 
     title.value = '';
     description.value = '';
@@ -80,22 +77,6 @@ export function handleAddTodo (dataNum) {
 
 export function handleToDoDisplay(dataNum) {
     displayProject(projectLibrary[dataNum].list, dataNum);
-<<<<<<< HEAD
-=======
-}
-
-export function handleCheckBox(element, p,d) {
-    const status = projectLibrary[p].list[d].status;
-    
-    if(element.checked) {
-        console.log("boom");
-    } else {
-        console.log('oops');
-    }
-    console.log(p + " " + d);
-    console.log(projectLibrary[p].list[d]);
-
->>>>>>> 9fd88ec054f08edc839d3a6e238c247d99a4297b
 }
 
 export function handleCheckBox(element, p,d) {
@@ -110,13 +91,13 @@ export function handleCheckBox(element, p,d) {
 
 }
 
-// export function setCheckBox(element, p, d) {
-//     if(projectLibrary[p].list[d].status === true) {
-//         element.checked = true;
-//     } else {
-//         element.checked = false;
-//     }
-// }
+export function setCheckBox(element, p, d) {
+    if(projectLibrary[p].list[d].status === true) {
+        element.checked = true;
+    } else if (projectLibrary[p].list[d].status === false){
+         element.checked = false;
+    }
+ }
 
  console.log(projectLibrary[0].list);
 
