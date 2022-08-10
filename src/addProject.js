@@ -1,5 +1,5 @@
 import './style.css';
-import { handleToDoDisplay, handleCheckBox, setCheckBox } from './index.js';
+import { handleToDoDisplay, handleCheckBox, setCheckBox, handleDeleteTodo } from './index.js';
 
 
 
@@ -89,7 +89,10 @@ function addToDoClick (element) {
     
     const projectNumber = dataNum;
     for (let i = 0; i < project.length; i ++ ){
-    
+
+    const projectString = String(projectNumber);    
+    const dataCombined = projectString + i;
+
     console.log(projectNumber);    
     const listRow = document.createElement('li');
     addClass(listRow, "listRow");
@@ -109,34 +112,87 @@ function addToDoClick (element) {
     const toDoDate = document.createElement('div');
     addClass(toDoDate, "toDoDate");
 
+    const toDoMenu = document.createElement('div');
+    addClass(toDoMenu, "toDoMenu");
+    // addMenuClick(toDoMenu, projectNumber, i);
+
+    const toDoButton = document.createElement('button');
+    addClass(toDoButton, "toDoButton");
+    toDoButton.setAttribute('data-num', i);
+    toDoButton.setAttribute('data-project', projectNumber);
+    // toDoButton.setAttribute('data-combined', dataCombined);
+    addMenuClick(toDoButton, dataCombined);
     
 
-    const toDoMenu = document.createElement('button');
-    addClass(toDoMenu, "toDoMenue");
-    toDoMenu.setAttribute('data-num', i);
-    toDoMenu.setAttribute('data-project', projectNumber);
-    toDoMenu.innerHTML = 'edit';
-    // addMenuClick(toDoMenu, projectNumber, i);
+    const popUpMenu = document.createElement('div');
+    addClass(popUpMenu, 'popUpMenu');
+    popUpMenu.setAttribute('id', dataCombined);
     
+    // popUpMenu.setAttribute('data-combined', dataCombined);
+    const editButton = document.createElement('button');
+    addClass(editButton, "editButton");
+    
+    editButton.innerHTML = 'edit';
+    const deleteButton = document.createElement('button');
+    addClass(deleteButton, "deleteButton");
+    deleteButton.innerHTML = 'delete';
+    deleteButton.setAttribute('data-num', i);
+    addDeleteClick(deleteButton, projectNumber, i);
+    
+    
+
     list.appendChild(listRow);
     listRow.appendChild(status);
     listRow.appendChild(toDoTitle);
     listRow.appendChild(toDoDate);
     listRow.appendChild(toDoMenu);
+    toDoMenu.appendChild(popUpMenu);
+    popUpMenu.appendChild(editButton);
+    popUpMenu.appendChild(deleteButton);
+    toDoMenu.appendChild(toDoButton);
 
     
 toDoTitle.innerHTML = project[i].title + project[i].description;
 status.innerHTML = project[i].priority;
 toDoDate.innerHTML = project[i].dueDate;
-toDoMenu.innerHTML = 'options';
+toDoButton.innerHTML = 'options';
+
+
+    
 }
 }
 
-function addMenuClick(element, p, d){
+function addDeleteClick(element, projectNumber, dataNum) {
     element.addEventListener('click', () => {
-
+        handleDeleteTodo(projectNumber, dataNum);
     })
 }
+
+
+function addMenuClick(element, dataCombined){
+    
+    element.addEventListener('click', () => {
+       const overlay = document.getElementById('overlay');
+       const popUp = document.getElementById(dataCombined);
+       if(popUp.classList == 'open') {
+        popUp.classList.remove('open');
+       }
+       popUp.classList.add('open');
+       overlay.classList.add('active');
+       
+
+       overlay.addEventListener('click', () => {
+        popUp.classList.remove('open');
+        overlay.classList.remove('active');
+       })
+       
+   
+    
+    
+    })
+}
+
+
 
 //This function adds a class to an element. I really just did this for fun and practice but also i think it saves a bit of time.
  function addClass(element, classword) {
@@ -144,11 +200,13 @@ function addMenuClick(element, p, d){
 }
 
 function addClickToCheckbox(element) {
+    if(element){
     element.addEventListener('change', () => {
     let dataNum = element.dataset.num;
     let project = element.dataset.project;
     
     handleCheckBox(element, project, dataNum);
     })
+    } return;
 }
 

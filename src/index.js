@@ -75,6 +75,13 @@ export function handleAddTodo (dataNum) {
     document.getElementById('formPopUp').style.display = "none";
 }
 
+export function handleDeleteTodo(projectNumber, dataNum) {
+        projectLibrary[projectNumber].list.splice(dataNum,1);
+        console.log(projectLibrary)
+        displayProject(projectLibrary[projectNumber].list, projectNumber);
+    }
+
+
 export function handleToDoDisplay(dataNum) {
     displayProject(projectLibrary[dataNum].list, dataNum);
 }
@@ -92,11 +99,15 @@ export function handleCheckBox(element, p,d) {
 }
 
 export function setCheckBox(element, p, d) {
+
+    if(projectLibrary[p]) {
     if(projectLibrary[p].list[d].status === true) {
         element.checked = true;
     } else if (projectLibrary[p].list[d].status === false){
          element.checked = false;
-    }
+    } 
+
+    } return;
  }
 
  console.log(projectLibrary[0].list);

@@ -1,12 +1,13 @@
 import { add } from 'date-fns';
 import './style.css';
 import { handleAddButton } from './index.js';
-import addProjectToDom from './addProject.js';
+import addProjectToDom, { closePopUp } from './addProject.js';
 import { handleAddTodo } from './index.js';
+
 
 export default function loadPage() {
     // Create Elements
-
+    
     const content = document.createElement('div');
     const topBar = document.createElement('div');
     const container = document.createElement('div');
@@ -63,6 +64,10 @@ export default function loadPage() {
         handleAddTodo(dataNum);
     })
 
+    //overlay
+    const overlay = document.createElement('div');
+    overlay.setAttribute('id', 'overlay');
+
 
     
     
@@ -72,6 +77,7 @@ export default function loadPage() {
     container.classList.add('container');
     sideBar.classList.add('sideBar');
     sideBar.setAttribute('id', 'sideBar');
+    overlay.classList.add('overlay');
 
     // projectList.setAttribute('id', 'projectList')
     topBar.classList.add('topBar');
@@ -92,6 +98,7 @@ export default function loadPage() {
     container.appendChild(main);
     main.appendChild(listTitle);
     main.appendChild(formPopUp);
+    main.appendChild(overlay);
 
     formPopUp.appendChild(formInput);
     formInput.appendChild(titleLabel);
