@@ -1,8 +1,8 @@
 import './style.css';
 import ToDo from './createToDo.js';
 import Project from './newProject.js';
-import loadPage from './loadPage.js';
-import addProjectToDom, {displayProject} from './addProject.js';
+import loadPage, {createEditBox} from './loadPage.js';
+import addProjectToDom, {clearHeader, displayProject} from './addProject.js';
 import { createHeader } from './addProject.js';
 
 document.body.appendChild(loadPage());
@@ -40,9 +40,14 @@ export function handleAddButton () {
     const newProject = new Project(newProjectName);
     getNewProject.value = '';
     projectLibrary.push(newProject);
+    if(projectLibrary && projectList){
+        
     projectList.remove();
     addProjectToDom(projectLibrary);
     console.log(projectLibrary);
+    } else {
+        addProjectToDom(projectLibrary)
+    }
     }
 }
 
@@ -117,11 +122,65 @@ export function setCheckBox(element, p, d) {
  console.log(projectLibrary[0].list);
 createHeader(projectLibrary[0].title, 0);
  addProjectToDom(projectLibrary);
-
-
-
-
 displayProject(projectLibrary[0].list, 0);
+
+export function handleEditButton(projectNumber, dataNum) {
+    const title = projectLibrary[projectNumber].list[dataNum].title;
+
+    const description = projectLibrary[projectNumber].list[dataNum].description;
+
+    const date = projectLibrary[projectNumber].list[dataNum].dueDate;
+
+    document.body.appendChild(createEditBox(title, description, date, projectNumber, dataNum));
+    
+}
+
+export function handleEditSubmitButton(projectNumber, dataNum){
+
+    let title = document.getElementById('editTitle');
+    let newTitle = title.value;
+
+    let description = document.getElementById('editDescription');
+    let newDescription = description.value;
+
+    let date = document.getElementById('editDate');
+    let newDate = date.value;
+    if (newDate === '') {
+        newDate = "No due date"; 
+    }
+    
+    let editBox = document.getElementById('editBox');
+
+    projectLibrary[projectNumber].list[dataNum].title = newTitle;
+
+    projectLibrary[projectNumber].list[dataNum].description = newDescription;
+
+    projectLibrary[projectNumber].list[dataNum].dueDate = newDate;
+
+    editBox.remove();
+    displayProject(projectLibrary[projectNumber].list, dataNum)
+}
+
+export function handleDeleteProject(dataNum) {
+    const projectList = document.getElementById('projectList');
+    projectLibrary.splice(dataNum, 1);
+    if(projectLibrary[0]) {
+    displayProject(projectLibrary[0].list, 0);
+    projectList.remove();
+    addProjectToDom(projectLibrary);
+    
+    clearHeader();
+    
+        createHeader(projectLibrary[dataNum -1].title, dataNum - 1);
+        return;
+    }
+    clearHeader()
+    projectList.remove()
+    displayProject();
+
+    
+}
+
 // console.log(projectLibrary);
 
 // console.log(projectLibrary[0].title);

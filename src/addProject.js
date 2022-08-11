@@ -1,5 +1,5 @@
 import './style.css';
-import { handleToDoDisplay, handleCheckBox, setCheckBox, handleDeleteTodo } from './index.js';
+import { handleToDoDisplay, handleCheckBox, setCheckBox, handleDeleteTodo, handleEditButton, handleDeleteProject } from './index.js';
 
 
 
@@ -10,7 +10,7 @@ export default function addProjectToDom(projectLibrary) {
     
     const sideBar = document.getElementById('sideBar'); 
     sideBar.appendChild(projectList);
-
+if(projectLibrary.length > 0) {
     for (let i = 0; i < projectLibrary.length; i++) {
       
     const projectTitle = document.createElement('div');
@@ -22,8 +22,8 @@ export default function addProjectToDom(projectLibrary) {
     projectTitle.innerHTML = projectLibrary[i].title;
     
     projectList.appendChild(projectTitle, dataNum);
-    
-}
+    }
+} return;
 }
 
 
@@ -33,7 +33,10 @@ function addClick(element, dataNum) {
 element.addEventListener('click', () => {
     let dataNum = element.dataset.num;
     let header = element.innerHTML;
+    const headerContainer = document.getElementById('headerContainer');
+    if (headerContainer) {
     clearHeader();
+    }
     createHeader(header, dataNum);
     handleToDoDisplay(dataNum);
 })
@@ -41,7 +44,7 @@ element.addEventListener('click', () => {
 
 
 
-function clearHeader() {
+export function clearHeader() {
     const headerContainer = document.getElementById('headerContainer');
     headerContainer.remove();
 }
@@ -65,16 +68,26 @@ function clearHeader() {
     addToDoButton.type = 'button';
     addToDoClick(addToDoButton);
 
+    const deleteProjectButton = document.createElement('button');
+    deleteProjectButton.setAttribute('id', 'deleteProjectButton');
+    deleteProjectButton.innerHTML = 'delete project';
+    deleteProjectButton.setAttribute('data-num', datanum)
+    deleteProjectButton.addEventListener('click', () => {
+        handleDeleteProject(datanum);
+    });
+
     document.getElementById('submitFormButton').setAttribute('data-num', datanum);
 
 
     listTitle.appendChild(headerContainer);
     headerContainer.appendChild(listHeader);
     headerContainer.appendChild(addToDoButton);
+    headerContainer.appendChild(deleteProjectButton);
 }
 
 
-function addToDoClick (element) {
+ function addToDoClick (element) {
+
     element.addEventListener('click', () => {
     document.getElementById('formPopUp').style.display = "block";
 
@@ -85,8 +98,9 @@ function addToDoClick (element) {
  export function displayProject (project, dataNum) {
    
     const list = document.getElementById('list');
-    list.innerHTML = '';
-    
+   
+   if (project){ 
+     list.innerHTML = '';
     const projectNumber = dataNum;
     for (let i = 0; i < project.length; i ++ ){
 
@@ -132,9 +146,13 @@ function addToDoClick (element) {
     const editButton = document.createElement('button');
     addClass(editButton, "editButton");
     
+    
     editButton.innerHTML = 'edit';
     const deleteButton = document.createElement('button');
     addClass(deleteButton, "deleteButton");
+    editButton.setAttribute('data-num', i);
+    editButton.setAttribute('data-project', projectNumber);
+    addEditClick(editButton, projectNumber, i);
     deleteButton.innerHTML = 'delete';
     deleteButton.setAttribute('data-num', i);
     addDeleteClick(deleteButton, projectNumber, i);
@@ -158,8 +176,10 @@ toDoDate.innerHTML = project[i].dueDate;
 toDoButton.innerHTML = 'options';
 
 
-    
-}
+}    
+} else{
+list.innerHTML = '';
+return;}
 }
 
 function addDeleteClick(element, projectNumber, dataNum) {
@@ -210,3 +230,8 @@ function addClickToCheckbox(element) {
     } return;
 }
 
+function addEditClick(element, projectNumber, dataNum) {
+    element.addEventListener('click', () => {
+        handleEditButton(projectNumber, dataNum);
+    })
+}
