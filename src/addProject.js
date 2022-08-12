@@ -1,7 +1,17 @@
 import './style.css';
 import { handleToDoDisplay, handleCheckBox, setCheckBox, handleDeleteTodo, handleEditButton, handleDeleteProject } from './index.js';
+import Trash from './icons/trash.svg';
+import Plus from './icons/plus.svg';
+import More from './icons/more.svg';
 
+const myTrash = new Image();
+myTrash.src = Trash;
 
+const myPlus = new Image();
+myPlus.src = Plus;
+
+const myMore = new Image();
+myMore.src = More;
 
 //This module adds and updates the DOM with project titles in the side bar. 
 export default function addProjectToDom(projectLibrary) {
@@ -61,18 +71,29 @@ export function clearHeader() {
     listHeader.setAttribute('id', 'listHeader');
     listHeader.innerHTML = title;
 
-    const addToDoButton = document.createElement('button');
+    const headerButtons = document.createElement('div');
+    headerButtons.classList.add('headerButtons');
+    const addToDoContainer = document.createElement('div');
+    addToDoContainer.classList.add('addToDoContainer');
+    const trashToDoContainer = document.createElement('div');
+    trashToDoContainer.classList.add('trashToDoContainer');
+    const addToDoTitle = document.createElement('div');
+    addToDoTitle.classList.add('addToDoTitle');
+    const trashToDoTitle = document.createElement('div');
+    trashToDoTitle.classList.add('trashToDoTitle');
+    const addToDoButton = myPlus;
     addToDoButton.setAttribute('id', 'addToDoButton');
     addToDoButton.setAttribute('data-num', datanum);
     addToDoButton.innerHTML = 'Add a ToDo';
     addToDoButton.type = 'button';
-    addToDoClick(addToDoButton);
+    addToDoClick(addToDoContainer);
 
-    const deleteProjectButton = document.createElement('button');
+    const deleteProjectButton = myTrash;
     deleteProjectButton.setAttribute('id', 'deleteProjectButton');
+    deleteProjectButton.setAttribute('type', 'button');
     deleteProjectButton.innerHTML = 'delete project';
     deleteProjectButton.setAttribute('data-num', datanum)
-    deleteProjectButton.addEventListener('click', () => {
+    trashToDoContainer.addEventListener('click', () => {
         handleDeleteProject(datanum);
     });
 
@@ -81,8 +102,17 @@ export function clearHeader() {
 
     listTitle.appendChild(headerContainer);
     headerContainer.appendChild(listHeader);
-    headerContainer.appendChild(addToDoButton);
-    headerContainer.appendChild(deleteProjectButton);
+    headerContainer.appendChild(addToDoContainer);
+    
+    addToDoContainer.appendChild(addToDoButton);
+    addToDoContainer.appendChild(addToDoTitle);
+    headerContainer.appendChild(trashToDoContainer);
+    trashToDoContainer.appendChild(deleteProjectButton);
+    trashToDoContainer.appendChild(trashToDoTitle);
+
+    trashToDoTitle.innerHTML = 'Delete Project';
+    addToDoTitle.innerHTML = 'Add todo';
+    
 }
 
 
@@ -120,8 +150,11 @@ export function clearHeader() {
     addClickToCheckbox(status);
     setCheckBox(status, projectNumber, i);
     
-
+    const toDoInfo = document.createElement('div');
+    toDoInfo.classList.add('toDoInfo');
     const toDoTitle = document.createElement('div');
+    const toDoDescription = document.createElement('div');
+    toDoDescription.classList.add('toDoDescription');
     addClass(toDoTitle, "toDoTitle");
     const toDoDate = document.createElement('div');
     addClass(toDoDate, "toDoDate");
@@ -161,7 +194,9 @@ export function clearHeader() {
 
     list.appendChild(listRow);
     listRow.appendChild(status);
-    listRow.appendChild(toDoTitle);
+    listRow.appendChild(toDoInfo);
+    toDoInfo.appendChild(toDoTitle);
+    toDoInfo.appendChild(toDoDescription);
     listRow.appendChild(toDoDate);
     listRow.appendChild(toDoMenu);
     toDoMenu.appendChild(popUpMenu);
@@ -170,10 +205,11 @@ export function clearHeader() {
     toDoMenu.appendChild(toDoButton);
 
     
-toDoTitle.innerHTML = project[i].title + project[i].description;
+toDoTitle.innerHTML = project[i].title;
+toDoDescription.innerHTML = project[i].description;
 status.innerHTML = project[i].priority;
 toDoDate.innerHTML = project[i].dueDate;
-toDoButton.innerHTML = 'options';
+toDoButton.innerHTML = 'Options';
 
 
 }    

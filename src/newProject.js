@@ -3,7 +3,7 @@ export default class Project {
         this.title = title;
         this.list = list;
         
-        
+       
     }
 }
 

@@ -4,17 +4,48 @@ body {
 }
 
 .topBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100vw;
-    height: 10vh;
-    
-   
+    height: 15vh;
+    background-color: #60a5fa;
+    color: #eff6ff;
 }
 
+.pageTitle {
+    font-size: 58px;
+}
+
+.sideBarButton {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    color: #60a5fa;
+
+}
 .sideBar {
     width: 25vw;
     height: 90vh;
-    border: 1px solid black;
     
+    padding: 10px;
+    
+}
+#addProjectInput {
+    
+}
+
+#listHeader {
+    font-size: 30px;
+    color: #1e3a8a;
+    margin-right: 200px;
+   
+}
+
+.addButton {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .container {
@@ -24,33 +55,104 @@ body {
 .main {
     display: flex;
     flex-direction: column;
-    border-top: 1px solid black;
+    padding-right: 25px;
     width: 75vw;
     height: 90vh;
-    background-color: rgb(179, 245, 185);
+    background-color: #eff6ff;
 }
 
 #listTitle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;    
     width: 100%;
     height: 50px;
-    background-color: rgb(106, 0, 255);
+    background-color: #eff6ff;
+    margin-top: 15px;
+    margin-left: 55px;
+    
 }
+
+
+#addToDoButton, #deleteProjectButton {
+    /* margin-right: 50px; */
+    cursor: pointer;
+}
+
+
 
 .listRow {
     display: grid;
-    grid-template-columns: .25fr 1fr 1fr 1fr;
+    justify-content: center;
+    gap: 5px;
+    grid-template-columns: .25fr 2fr 1fr .25fr;
 }
 
 .status, .toDoDate, .toDoMenu  {
     flex-grow: 1;
+    align-self: center;
 }
 
 .toDoTitle {
     flex-grow: 2;
 }
 
+.toDoButton {
+    background-color: #60a5fa;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+input.status {
+    cursor: pointer;
+    align-self: center;
+    justify-self: center;
+}
+
+.toDoInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.toDoDescription {
+    font-size: 15px;
+}
+
+#submitFormButton, #closeFormButton, #editSubmitButton, #editCancelButton{
+    background-color: #eff6ff;
+    color: #1e3a8a;
+    padding: 5px;
+    padding-right: 15px;
+    padding-left: 15px;
+    border-radius: 5px;
+    border: none;
+    margin: 5px;
+    font-size: 18px;
+}
+
+input {
+    height: 24px;
+    border-radius: 5px;
+    color: #1e3a8a;
+}
+
+li {
+    margin-bottom: 5px;
+    padding: 5px;
+    border-top: 1px dashed #3b82f6;
+}
+
 .projectTitle {
     cursor: pointer;
+    color: #1e3a8a;
+    font-size: 20px;
+    border-top: 1px dashed #3b82f6
+    ;
+    padding: 7px;
 }
 
 #headerContainer {
@@ -60,31 +162,56 @@ body {
     gap: 20px;
 }
 
-#listTitle {
-    display: flex;
-    justify-content: space-around;
+#list {
+    color: #1e3a8a;
+    font-size: 20px;
+    text-align: center;
+    text-justify: center;
 }
 
-#formPopUp {
+label {
+    color: white ;
+    font-size: 20px;
+    margin: 2px;
+}
+
+.formInput, .editForm{
+padding: 10px;
+}
+
+#formPopUp, .editForm{
     width: 500px;
     display: none;
     position: fixed;
     top: 50%;
     left: 50%;
-    border: 2px solid black;
+    border: 1px solid #3b82f6;
+    border-radius: 5px;
+    background-color: #60a5fa;
     transform: translate(-50%, -50%) scale(1);
     transition: 200ms ease-in-out;
     z-index: 10; 
     
 }
 
-input {
-    width: 95%;
+.editForm {
+
+    display: block;
 }
 
-/* .status {
-    width: 30px;
-} */
+date {
+    color: #1e3a8a;
+}
+
+input {
+    width: 95%;
+    font-size: 20px;
+    border: 1px solid #3b82f6;
+    margin-bottom: 5px;
+    padding: 3px;
+}
+ 
+
 .toDoMenu {
     display: flex;
     align-items: center;
@@ -97,16 +224,32 @@ input {
     display: none;
     
 }
- .popUpMenu.open {
+ .popUpMenu.open  {
     display: flex;
+    gap: 5px;
     flex-direction: column;
     position: absolute;
     z-index: 2;
-    background-color: rgb(250, 215, 220);
-    padding: 4px;
+    background-color: #bfdbfe;
+    padding: 6px;
     bottom: 30px;
     right: 10px;
+    border-radius: 5px;
  }
+
+ .editButton, .deleteButton  {
+    
+    background-color: #eff6ff;
+    color: #1e3a8a;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+ }
+#editSubmitButton {
+    margin-right: 10px;
+}
+ 
 
  .overlay.active {
     
@@ -116,7 +259,7 @@ input {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color:rgb(106, 0, 255);
+    background-color:rgb(231, 228, 236);
     pointer-events: all;
  }
 
@@ -130,8 +273,20 @@ input {
     transform: translate(-50%, -50%) scale(1);
     transition: 200ms ease-in-out;
     z-index: 10; 
-    
 }
- /* .overlay {
-    display: none;
- } */
+ 
+.editForm {
+    /* padding: 10px; */
+}
+
+.trashToDoContainer, .addToDoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #60a5fa;
+    cursor: pointer;
+}
+
+.headerContainer {
+    display: flex;
+}

@@ -7,21 +7,22 @@ import { createHeader } from './addProject.js';
 
 document.body.appendChild(loadPage());
 
-const toDo = new ToDo('Shop', 'Groceries', 'Today');
+// const toDo = new ToDo('Shop', 'Groceries', 'Today');
 
 
-const toDo1 = new ToDo("Eat", 'some food', "today");
+// const toDo1 = new ToDo("Eat", 'some food', "Today");
 
-const toDo3 = new ToDo("Read", "Books", "Now");
+// const toDo3 = new ToDo("Read", "Books", "Now");
 
 
-const projectLibrary = [];
+const projectLibrary = JSON.parse(localStorage.getItem('projectLibrary')) || [];
 
-const project1 = new Project("Quick List");
-project1.list.push(toDo);
-project1.list.push(toDo1);
-projectLibrary.push(project1);
-console.log(projectLibrary);
+// const project1 = new Project("Quick List");
+// project1.list.push(toDo);
+// project1.list.push(toDo1);
+// projectLibrary.push(project1);
+
+// console.log(projectLibrary);
 
 // const project2 = new Project('eating');
 // project2.list.push(toDo);
@@ -40,6 +41,7 @@ export function handleAddButton () {
     const newProject = new Project(newProjectName);
     getNewProject.value = '';
     projectLibrary.push(newProject);
+    
     if(projectLibrary && projectList){
         
     projectList.remove();
@@ -49,6 +51,7 @@ export function handleAddButton () {
         addProjectToDom(projectLibrary)
     }
     }
+    localStorage.setItem('projectLibrary', JSON.stringify(projectLibrary));
 }
 
 export function handleAddTodo (dataNum) {
@@ -72,18 +75,21 @@ export function handleAddTodo (dataNum) {
 
     let newToDo = new ToDo(newTitle, newDescription, newDate, false);
     projectLibrary[dataNum].list.push(newToDo);
+    
     displayProject(projectLibrary[dataNum].list, dataNum);
 
     title.value = '';
     description.value = '';
     date.value = '';
     document.getElementById('formPopUp').style.display = "none";
+    localStorage.setItem('projectLibrary', JSON.stringify(projectLibrary));
 }
 
 export function handleDeleteTodo(projectNumber, dataNum) {
         projectLibrary[projectNumber].list.splice(dataNum,1);
         console.log(projectLibrary)
         displayProject(projectLibrary[projectNumber].list, projectNumber);
+        localStorage.setItem('projectLibrary', JSON.stringify(projectLibrary));
     }
 
 
@@ -100,7 +106,7 @@ export function handleCheckBox(element, p,d) {
     }
     console.log(p + " " + d);
     console.log(projectLibrary[p].list[d].status);
-
+    localStorage.setItem('projectLibrary', JSON.stringify(projectLibrary));
 }
 
 export function setCheckBox(element, p, d) {
@@ -159,6 +165,7 @@ export function handleEditSubmitButton(projectNumber, dataNum){
 
     editBox.remove();
     displayProject(projectLibrary[projectNumber].list, dataNum)
+    localStorage.setItem('projectLibrary', JSON.stringify(projectLibrary));
 }
 
 export function handleDeleteProject(dataNum) {
@@ -171,12 +178,13 @@ export function handleDeleteProject(dataNum) {
     
     clearHeader();
     
-        createHeader(projectLibrary[dataNum -1].title, dataNum - 1);
+        createHeader(projectLibrary[0].title, 0);
         return;
     }
     clearHeader()
     projectList.remove()
     displayProject();
+    localStorage.setItem('projectLibrary', JSON.stringify(projectLibrary));
 
     
 }
